@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A7EDB658-010B-48ED-9C5B-1D50C9F43DBF}</ProjectGuid>
+    <TemplateGuid>{dd38f7fc-d7bd-488b-9242-7d8754cde80d}</TemplateGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration>Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Win32</Platform>
+    <RootNamespace>Falcon</RootNamespace>
+    <WindowsTargetPlatformVersion>$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <TargetVersion>Windows7</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Makefile</ConfigurationType>
+    <DriverType>WDM</DriverType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <TargetVersion>Windows7</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Makefile</ConfigurationType>
+    <DriverType>WDM</DriverType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <TargetVersion>Windows7</TargetVersion>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Makefile</ConfigurationType>
+    <DriverType>WDM</DriverType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <TargetVersion>Windows7</TargetVersion>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <ConfigurationType>Makefile</ConfigurationType>
+    <DriverType>WDM</DriverType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <OutDir>$(SolutionDir)Build\Bins\I386\</OutDir>
+    <IntDir>$(SolutionDir)Build\Objs\$(ProjectName)\I386\</IntDir>
+    <IncludePath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir)</IncludePath>
+    <LibraryPath>..\..\..\MiniSDK\lib\I386;..\..\..\MiniSDK\lib\Crt\I386</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <OutDir>$(SolutionDir)Build\Bins\I386\</OutDir>
+    <IntDir>$(SolutionDir)Build\Objs\$(ProjectName)\I386\</IntDir>
+    <IncludePath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir)</IncludePath>
+    <LibraryPath>..\..\..\MiniSDK\lib\I386;..\..\..\MiniSDK\lib\Crt\I386</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <OutDir>$(SolutionDir)Build\Bins\AMD64\</OutDir>
+    <IntDir>..\..\Build\Objs\$(ProjectName)\AMD64\</IntDir>
+    <IncludePath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir);$(VC_IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\MiniSDK\lib\AMD64;..\..\..\MiniSDK\lib\Crt\AMD64</LibraryPath>
+    <NMakeBuildCommandLine>NMAKE /NOLOGO BUILD PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>NMAKE /NOLOGO REBUILD PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>NMAKE /NOLOGO CLEAN PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)Build\Bins\AMD64\$(ProjectName).sys</NMakeOutput>
+    <NMakePreprocessorDefinitions>UNICODE;_UNICODE;_AMD64_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;DEVL;ZYAN_NO_LIBC</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir)</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <OutDir>$(SolutionDir)Build\Bins\AMD64\</OutDir>
+    <IntDir>..\..\Build\Objs\$(ProjectName)\AMD64\</IntDir>
+    <IncludePath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir);$(VC_IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\MiniSDK\lib\AMD64;..\..\..\MiniSDK\lib\Crt\AMD64</LibraryPath>
+    <NMakePreprocessorDefinitions>UNICODE;_UNICODE;_AMD64_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;DEVL;ZYAN_NO_LIBC</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>..\..\..\MiniSDK\inc\ddk;..\..\..\MiniSDK\inc\halkit;..\..\..\MiniSDK\inc\internal\base;..\..\..\MiniSDK\inc\internal\ds;..\..\..\MiniSDK\inc\internal\sdktools;..\..\..\MiniSDK\inc\sdk;..\..\..\MiniSDK\inc\sdk\inc\crt;..\..\..\MiniSDK\inc\base;..\..\..\MiniSDK\inc\base\ntos;..\..\..\MiniSDK\inc\sdk\wnet;..\..\..\MiniSDK\inc\sdk\crt;..\..\..\MiniSDK\inc\sdk\crt\gl;..\..\..\MiniSDK\inc\sdk\crt\sys;..\..\..\MiniSDK\inc\debuggers;$(SolutionDir)Include;$(ProjectDir)</NMakeIncludeSearchPath>
+    <NMakeBuildCommandLine>NMAKE /NOLOGO BUILD PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>NMAKE /NOLOGO REBUILD PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>NMAKE /NOLOGO CLEAN PLATFORM=$(PlatformShortName) PROJ=$(ProjectName) SLND=$(SolutionDir)</NMakeCleanCommandLine>
+    <NMakeOutput>$(SolutionDir)Build\Bins\AMD64\$(ProjectName).sys</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;DOSWIN32;_X86_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;DOSWIN32;_X86_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;_AMD64_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DriverSign>
+      <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+    </DriverSign>
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;_AMD64_;NTOS_KERNEL_RUNTIME;_NTDRIVER_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <FilesToPackage Include="$(TargetPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AMD64\SpaceAMD64.c" />
+    <ClCompile Include="AMD64\StackAMD64.c" />
+    <ClCompile Include="Check.c" />
+    <ClCompile Include="Dpc.c" />
+    <ClCompile Include="Hook.c" />
+    <ClCompile Include="Memory.c" />
+    <ClCompile Include="SysPool.c" />
+    <ClCompile Include="Thread.c" />
+    <ClCompile Include="Falcon.c" />
+    <ClCompile Include="File.c" />
+    <ClCompile Include="Hash.c" />
+    <ClCompile Include="Mapper.c" />
+    <ClCompile Include="Modules.c" />
+    <ClCompile Include="Neac.c" />
+    <ClCompile Include="NtApi.c" />
+    <ClCompile Include="Process.c" />
+    <ClCompile Include="Search.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="capstone.h" />
+    <ClInclude Include="Check.h" />
+    <ClInclude Include="Dump.h" />
+    <ClInclude Include="Hook.h" />
+    <ClInclude Include="LibDefs.h" />
+    <ClInclude Include="Space.h" />
+    <ClInclude Include="Dpc.h" />
+    <ClInclude Include="Falcon.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="SysPool.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="Thread.h" />
+    <ClInclude Include="File.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Hash.h" />
+    <ClInclude Include="Mapper.h" />
+    <ClInclude Include="Modules.h" />
+    <ClInclude Include="NtApi.h" />
+    <ClInclude Include="PriDefs.h" />
+    <ClInclude Include="Neac.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="Search.h" />
+    <ClInclude Include="X86.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
