@@ -13,6 +13,7 @@ GRTBLOCK RtBlock = { 0 };
 
 void InitializeDebuggerBlock()
 {
+    PKDDEBUGGER_DATA64 kdDebuggerDataBlock = NULL;
     CONTEXT context = { 0 };
     context.ContextFlags = CONTEXT_FULL;
     RtlCaptureContext(&context);
@@ -25,29 +26,30 @@ void InitializeDebuggerBlock()
 
         if( KeCapturePersistentThreadState(&context, NULL, 0, 0, 0, 0, 0, dumpHeader) >= 0x23E0 )
         {
-            RtBlock.PspCidTable = dumpHeader->KdDebuggerDataBlock->PspCidTable;
-            RtBlock.PsLoadedModuleList = dumpHeader->KdDebuggerDataBlock->PsLoadedModuleList;
+            kdDebuggerDataBlock = (u8ptr)dumpHeader + KDDEBUGGER_DATA_OFFSET;
 
-            if (dumpHeader->KdDebuggerDataBlock->MmPfnDatabase)
-                RtBlock.MmPfnDatabase = __rdu64(dumpHeader->KdDebuggerDataBlock->MmPfnDatabase);
+            RtBlock.PspCidTable = kdDebuggerDataBlock->PspCidTable;
+            RtBlock.PsLoadedModuleList = kdDebuggerDataBlock->PsLoadedModuleList;
 
-            if (dumpHeader->KdDebuggerDataBlock->MmNonPagedPoolStart)
-                RtBlock.MmNonPagedPoolStart = __rdu64(dumpHeader->KdDebuggerDataBlock->MmNonPagedPoolStart);
+            if (kdDebuggerDataBlock->MmPfnDatabase)
+                RtBlock.MmPfnDatabase = __rdu64(kdDebuggerDataBlock->MmPfnDatabase);
 
-            if (dumpHeader->KdDebuggerDataBlock->MmNonPagedPoolEnd)
-                RtBlock.MmNonPagedPoolEnd = __rdu64(dumpHeader->KdDebuggerDataBlock->MmNonPagedPoolEnd);
+            if (kdDebuggerDataBlock->MmNonPagedPoolStart)
+                RtBlock.MmNonPagedPoolStart = __rdu64(kdDebuggerDataBlock->MmNonPagedPoolStart);
 
-            if (dumpHeader->KdDebuggerDataBlock->MmPagedPoolStart)
-                RtBlock.MmPagedPoolStart = __rdu64((dumpHeader->KdDebuggerDataBlock->MmPagedPoolStart));
+            if (kdDebuggerDataBlock->MmNonPagedPoolEnd)
+                RtBlock.MmNonPagedPoolEnd = __rdu64(kdDebuggerDataBlock->MmNonPagedPoolEnd);
 
-            if (dumpHeader->KdDebuggerDataBlock->MmPagedPoolEnd)
-                RtBlock.MmPagedPoolEnd = __rdu64(dumpHeader->KdDebuggerDataBlock->MmPagedPoolEnd);
+            if (kdDebuggerDataBlock->MmPagedPoolStart)
+                RtBlock.MmPagedPoolStart = __rdu64((kdDebuggerDataBlock->MmPagedPoolStart));
 
+            if (kdDebuggerDataBlock->MmPagedPoolEnd)
+                RtBlock.MmPagedPoolEnd = __rdu64(kdDebuggerDataBlock->MmPagedPoolEnd);
 
             if (RtBlock.NtVersion >= 0x513)
             {
-                RtBlock.MmAllocatedNonPagedPool = dumpHeader->KdDebuggerDataBlock->MmAllocatedNonPagedPool;
-                RtBlock.MmUnloadedDrivers = dumpHeader->KdDebuggerDataBlock->MmUnloadedDrivers;
+                RtBlock.MmAllocatedNonPagedPool = kdDebuggerDataBlock->MmAllocatedNonPagedPool;
+                RtBlock.MmUnloadedDrivers = kdDebuggerDataBlock->MmUnloadedDrivers;
             }
         }
         ExFreePoolWithTag(dumpHeader, POOLTAGTX);
