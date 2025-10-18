@@ -8,7 +8,7 @@
 #define LOW_32(addr64)  ((u32)(((u64)(addr64)) & 0xFFFFFFFF))
 // Size of each memory slot.
 #if defined(_M_X64) || defined(__x86_64__)
-#define MEMORY_SLOT_SIZE 64
+#define MEMORY_SLOT_SIZE 128
 #else
 #define MEMORY_SLOT_SIZE 32
 #endif
@@ -134,9 +134,11 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
             else if (pCsInsn->detail->x86.opcode[0] == 0xe8)
             {
                 // Direct relative CALL
-                ULONG_PTR dest = pOldInst + pCsInsn->size + pCsInsn->detail->x86.operands[0].imm;
+                ULONG_PTR dest = pCsInsn->detail->x86.operands[0].imm;
 #if defined(_M_X64) || defined(__x86_64__)
                 call.address = (u64)dest;
+#else
+                // x86 todo
 #endif
                 pCopySrc = &call;
                 copySize = sizeof(call);
@@ -145,12 +147,7 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
             else if ((pCsInsn->detail->x86.opcode[0] & 0xFD) == 0xe9)
             {
                 // Direct relative JMP (EB or E9)
-                ULONG_PTR dest = pOldInst + pCsInsn->size;
-
-                if (pCsInsn->detail->x86.opcode[0] == 0xEB) // isShort jmp
-                    dest += (s8)pCsInsn->detail->x86.operands[0].imm;
-                else
-                    dest += (s32)pCsInsn->detail->x86.operands[0].imm;
+                ULONG_PTR dest = pCsInsn->detail->x86.operands[0].imm;
 
                 if ((ULONG_PTR)ct->pTarget <= dest
                     && dest < ((ULONG_PTR)ct->pTarget + sizeof(JMP_REL)))
@@ -158,12 +155,14 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
                     if (jmpDest < dest)
                         jmpDest = dest;
                 }
-
+                
                 else
                 {
 #if defined(_M_X64) || defined(__x86_64__)
                     jmp.dummy3 = LOW_32(dest);
                     jmp.dummy4 = HIGH_32(dest);
+#else
+                    //x86 todo
 #endif
                     pCopySrc = &jmp;
                     copySize = sizeof(jmp);
@@ -176,14 +175,7 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
 
             else if ((pCsInsn->detail->x86.opcode[0] & 0xF0) == 0x70 || (pCsInsn->detail->x86.opcode[0] & 0xFC) == 0xE0 || (pCsInsn->detail->x86.opcode[1] & 0xF0) == 0x80)
             {
-                // Direct relative Jcc
-                ULONG_PTR dest = pOldInst + pCsInsn->size;
-
-                if ((pCsInsn->detail->x86.opcode[0] & 0xF0) == 0x70      // Jcc
-                    || (pCsInsn->detail->x86.opcode[0] & 0xFC) == 0xE0)  // LOOPNZ/LOOPZ/LOOP/JECXZ
-                    dest += (s8)pCsInsn->detail->x86.operands[0].imm;
-                else
-                    dest += (s32)pCsInsn->detail->x86.operands[0].imm;
+                ULONG_PTR dest = pCsInsn->detail->x86.operands[0].imm;
 
                 // Simply copy an internal jump.
                 if ((ULONG_PTR)ct->pTarget <= dest
@@ -198,7 +190,6 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
                     bContinue = FALSE;
                     break;
                 }
-
                 else
                 {
                     u8 cond = ((pCsInsn->detail->x86.opcode[0] != 0x0F ? pCsInsn->detail->x86.opcode[0] : pCsInsn->detail->x86.opcode[1]) & 0x0F);
@@ -206,6 +197,8 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
                     // Invert the condition in x64 mode to simplify the conditional jump logic.
                     jcc.opcode = 0x71 ^ cond;
                     jcc.address = (u64)dest;
+#else
+                    //x86 todo
 #endif
                     pCopySrc = &jcc;
                     copySize = sizeof(jcc);
@@ -289,6 +282,8 @@ b CreateTrampolineFunction(TRAMPOLINE* ct)
     jmp.dummy4 = HIGH_32(ct->pDetour);
     ct->pRelay = (u64)((u8ptr)ct->pTrampoline + newPos);
     memcpy((ptr)ct->pRelay, &jmp, sizeof(jmp));
+#else 
+    //x86 todo
 #endif
     return TRUE;
 }
@@ -370,7 +365,7 @@ VOID EnableHookLL(HOOK_CONTROL* control)
 NTSTATUS MHCreateHook(u64 pTarget, u64 pDetour, ptr* ppOriginal, HOOK_ENTRY* pHook)
 {
     status st = STATUS_INSUFFICIENT_RESOURCES;
-    ptr trampline = ExAllocatePoolWithTag(NonPagedPool, 0x32, POOLTAGTX);
+    ptr trampline = ExAllocatePoolWithTag(NonPagedPool, TRAMPOLINE_MAX_SIZE, POOLTAGTX);
 
     if (trampline)
     {
