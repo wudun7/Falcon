@@ -138,15 +138,15 @@ PMMPTE MapPageTableToVirtualAddress(PMMPTE pt)
 }
 
 /*
-¼ì²énoexec
-¿ÉÐ´+²»¿ÉÖ´ÐÐ £¨1 + 2 * 1£©^1 = 2
-¿ÉÐ´+¿ÉÖ´ÐÐ £¨1 + 2 * 0£©^1 = 0
-²»¿ÉÐ´+²»¿ÉÖ´ÐÐ £¨0+2*1£©^1 = 3
-²»¿ÉÐ´+¿ÉÖ´ÐÐ£¨0+2*0£©^1 = 1
+ï¿½ï¿½ï¿½noexec
+ï¿½ï¿½Ð´+ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½1 + 2 * 1ï¿½ï¿½^1 = 2
+ï¿½ï¿½Ð´+ï¿½ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½1 + 2 * 0ï¿½ï¿½^1 = 0
+ï¿½ï¿½ï¿½ï¿½Ð´+ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ ï¿½ï¿½0+2*1ï¿½ï¿½^1 = 3
+ï¿½ï¿½ï¿½ï¿½Ð´+ï¿½ï¿½Ö´ï¿½Ð£ï¿½0+2*0ï¿½ï¿½^1 = 1
 
-²»¼ûnoexec
-²»¿ÉÐ´ 1/true
-¿ÉÐ´ 0/false
+ï¿½ï¿½ï¿½ï¿½noexec
+ï¿½ï¿½ï¿½ï¿½Ð´ 1/true
+ï¿½ï¿½Ð´ 0/false
 
 */
 
@@ -303,9 +303,9 @@ b IsExecutableAddress(PVOID va)
         PMMPTE ppde = GetPdeAddress(va);
         PMMPTE ppte = GetPteAddress(va);
 
-        // PMMPTE.u.MMPTE_HARDWARE ×î¸ßÎ»ÊÇNoExecute£¬Èç¹ûÊÇ1£¬ÔòÎª¸ºÊý
-        // Èç¹ûpdeµÄNoExecute = 1 ÎÞ·¨Ö´ÐÐ
-        // Èç¹û·Ç´óÒ³£¬pteµÄNoExecute = 1 Ò²ÎÞ·¨Ö´ÐÐ
+        // PMMPTE.u.MMPTE_HARDWARE ï¿½ï¿½ï¿½Î»ï¿½ï¿½NoExecuteï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½pdeï¿½ï¿½NoExecute = 1 ï¿½Þ·ï¿½Ö´ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½Ç´ï¿½Ò³ï¿½ï¿½pteï¿½ï¿½NoExecute = 1 Ò²ï¿½Þ·ï¿½Ö´ï¿½ï¿½
         if (*(s64*)ppde < 0 || (ppde->u.Hard.LargePage == FALSE && (!ppte || *(s64*)ppte < 0)))
             return FALSE;
     }
@@ -326,10 +326,10 @@ NTSTATUS InitPetBase()
     {
         if (osInfo.dwMajorVersion < 0xA || osInfo.dwBuildNumber <= 0x37EB)
         {
-            RtBlock.PxeBase = u64c(0xFFFFF6FB7DBED000);
-            RtBlock.PpeBase = u64c(0xFFFFF6FB7DA00000);
-            RtBlock.PdeBase = u64c(0xFFFFF6FB40000000);
-            RtBlock.PteBase = u64c(0xFFFFF68000000000);
+            RtBlock.PxeBase = (PMMPTE)(0xFFFFF6FB7DBED000);
+            RtBlock.PpeBase = (PMMPTE)(0xFFFFF6FB7DA00000);
+            RtBlock.PdeBase = (PMMPTE)(0xFFFFF6FB40000000);
+            RtBlock.PteBase = (PMMPTE)(0xFFFFF68000000000);
         }
         else
         {
@@ -345,10 +345,10 @@ NTSTATUS InitPetBase()
                 if (ppteBase)
                 {
                     u64 pteBase = *(u64*)((u8ptr)ppteBase + 10);
-                    RtBlock.PxeBase = pteBase | (((pteBase >> 39) & 0x1FF) << 30) | (((pteBase >> 39) & 0x1FF) << 21) | (((pteBase >> 39) & 0x1FF) << 12);
-                    RtBlock.PpeBase = pteBase | (((pteBase >> 39) & 0x1FF) << 30) | (((pteBase >> 39) & 0x1FF) << 21);
-                    RtBlock.PdeBase = pteBase | (((pteBase >> 39) & 0x1FF) << 30);
-                    RtBlock.PteBase = pteBase;
+                    RtBlock.PxeBase = (PMMPTE)(pteBase | (((pteBase >> 39) & 0x1FF) << 30) | (((pteBase >> 39) & 0x1FF) << 21) | (((pteBase >> 39) & 0x1FF) << 12));
+                    RtBlock.PpeBase = (PMMPTE)(pteBase | (((pteBase >> 39) & 0x1FF) << 30) | (((pteBase >> 39) & 0x1FF) << 21));
+                    RtBlock.PdeBase = (PMMPTE)(pteBase | (((pteBase >> 39) & 0x1FF) << 30));
+                    RtBlock.PteBase = (PMMPTE)pteBase;
                 }
             }
         }

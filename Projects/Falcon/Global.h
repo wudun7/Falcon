@@ -87,7 +87,7 @@ typedef struct _GRTBLOCK {
 	UCHAR KeNumberProcessors;
 	ULONG32 MiPagingLevels;
 
-	PVOID PhysicalMemoryRanges; //Ð¶ÔØÊ±ÐèÒªÊÍ·Å
+	PVOID PhysicalMemoryRanges; //Ð¶ï¿½ï¿½Ê±ï¿½ï¿½Òªï¿½Í·ï¿½
 
 	ULONG64 PspCidTable;
 	ULONG64 PsLoadedModuleList;
@@ -100,10 +100,10 @@ typedef struct _GRTBLOCK {
 	ULONG64 MmUnloadedDrivers;
 	
 #ifdef _WIN64
-	ULONG64 PxeBase;
-	ULONG64 PpeBase;
-	ULONG64 PdeBase;
-	ULONG64 PteBase;
+	PMMPTE PxeBase;
+	PMMPTE  PpeBase;
+	PMMPTE  PdeBase;
+	PMMPTE  PteBase;
 #endif // _WIN64
 
 	VOID (*ExReleaseSpinLockSharedFromDpcLevel)(
