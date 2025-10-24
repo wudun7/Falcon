@@ -151,6 +151,7 @@ CAPSTONE = \
     capstone\M68KDisassembler.obj \
     capstone\M68KInstPrinter.obj \
     capstone\M68KModule.obj \
+    capstone\Mapping.obj \
     capstone\MCInst.obj \
     capstone\MCInstrDesc.obj \
     capstone\MCRegisterInfo.obj \
@@ -174,6 +175,7 @@ CAPSTONE = \
     capstone\SystemZModule.obj \
     capstone\utils.obj \
     capstone\winkernel_mm.obj \
+    capstone\X86InstPrinterCommon.obj\
     capstone\X86ATTInstPrinter.obj \
     capstone\X86Disassembler.obj \
     capstone\X86DisassemblerDecoder.obj \
