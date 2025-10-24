@@ -66,7 +66,7 @@ BOOLEAN CapstoneDisasmWithCallback(PVOID start, SIZE_T range, CAPSTONECALLBACK c
 #endif // DEBUG
 
 
-	// ËøÒ³
+	// ï¿½ï¿½Ò³
 	if (moduleBase &&
 		pNt &&
 		pNt->FileHeader.NumberOfSections
@@ -99,7 +99,7 @@ BOOLEAN CapstoneDisasmWithCallback(PVOID start, SIZE_T range, CAPSTONECALLBACK c
 		}
 	}
 
-	// ÎŞ·¨¶Ôinit£¨ÒÑÊÍ·Å£©½Ú½øĞĞ·´»ã±à
+	// ï¿½Ş·ï¿½ï¿½ï¿½initï¿½ï¿½ï¿½ï¿½ï¿½Í·Å£ï¿½ï¿½Ú½ï¿½ï¿½Ğ·ï¿½ï¿½ï¿½ï¿½
 	if (bInitSec || (cs_open(CS_ARCH_X86, CS_MODE_64, &hCsEngine) != CS_ERR_OK))
 		goto EXIT;
 
@@ -139,7 +139,7 @@ BOOLEAN CapstoneDisasmWithCallback(PVOID start, SIZE_T range, CAPSTONECALLBACK c
 				if (insnCnt)
 				{
 					inslen = pCsInsn->size;
-					// µ÷ÓÃcallback
+					// ï¿½ï¿½ï¿½ï¿½callback
 					if (callback)
 						result = callback(pCsInsn, _start, inslen, insnIdx, params, any);
 
@@ -156,7 +156,11 @@ BOOLEAN CapstoneDisasmWithCallback(PVOID start, SIZE_T range, CAPSTONECALLBACK c
 					_start = (u8ptr)_start + inslen;
 					insnIdx++;
 				}
-
+				else
+				{
+					bContinue = FALSE;
+					break;
+				}
 			} while (0);
 
 			if (!bContinue || _start > (u8ptr)start + range)
